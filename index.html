@@ -1,318 +1,232 @@
-```html
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Meghal Adventure AI</title>
+
+<title>Meghal's Adventure Machine</title>
 
 <style>
 
 body{
 font-family: Arial, sans-serif;
-background: linear-gradient(135deg,#ffecd2,#fcb69f);
 text-align:center;
+background: linear-gradient(135deg,#ff9a9e,#fad0c4,#fad0c4,#fbc2eb);
 padding:40px;
-color:#333;
 }
 
 h1{
-font-size:38px;
+font-size:42px;
+margin-bottom:10px;
+}
+
+p{
+font-size:18px;
+}
+
+.card{
+background:white;
+padding:35px;
+border-radius:22px;
+max-width:700px;
+margin:auto;
+box-shadow:0 10px 35px rgba(0,0,0,0.2);
 }
 
 button{
-padding:14px 26px;
+padding:15px 26px;
 margin:10px;
 font-size:18px;
 border:none;
 border-radius:12px;
 cursor:pointer;
-background:white;
-box-shadow:0 4px 10px rgba(0,0,0,0.2);
+background:#ff6f91;
+color:white;
 transition:0.2s;
 }
 
 button:hover{
 transform:scale(1.1);
+background:#ff4f7b;
 }
 
-.section{
-margin-top:40px;
-}
-
-#loader{
+#result{
+margin-top:25px;
 font-size:22px;
-line-height:1.8;
 }
 
-.spin{
-animation:spin 1s linear;
+#counter{
+margin-top:10px;
+font-size:16px;
+color:gray;
+}
+
+.wheel{
+font-size:70px;
+margin:20px;
+animation:spin 1s linear infinite;
+display:none;
 }
 
 @keyframes spin{
-0%{transform:rotate(0deg);}
-100%{transform:rotate(360deg);}
+0%{transform:rotate(0deg)}
+100%{transform:rotate(360deg)}
 }
 
-#level{
-font-size:22px;
-margin-top:10px;
-font-weight:bold;
-}
-
-#secret{
-margin-top:40px;
-font-size:26px;
-color:#c0392b;
-font-weight:bold;
-}
-
-input{
-padding:10px;
-font-size:16px;
-border-radius:8px;
-border:1px solid #ccc;
+.footer{
+margin-top:25px;
+font-size:14px;
+color:gray;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div id="loader">
+<div class="card">
 
-<h1>🤖 Meghal AI System Booting...</h1>
+<h1>🎉 Meghal's Adventure Machine 🎉</h1>
 
-<p>Analyzing Meghal's boredom levels...</p>
-<p>Scanning café compatibility...</p>
-<p>Checking travel curiosity...</p>
-<p>Preparing adventure machine...</p>
+<p>
+Built specially for <b>Meghal</b> —  
+Sydney explorer 🌏, travel lover ✈️,  
+juice enthusiast 🧃, egg food expert 🍳.
+</p>
 
+<div class="wheel" id="wheel">🎡</div>
+
+<button onclick="spinAdventure()">🎡 Spin Adventure</button>
+
+<button onclick="getJoke()">😂 Random Joke</button>
+
+<button onclick="travel()">🌍 Travel Dream</button>
+
+<button onclick="cafe()">☕ Cafe Mission</button>
+
+<button onclick="secret()">💖 Secret Button</button>
+
+<div id="result"></div>
+
+<div id="counter"></div>
+
+<div class="footer">
+Warning: excessive use may cause spontaneous adventures.
 </div>
-
-<div id="app" style="display:none;">
-
-<h1>🚀 Meghal's Adventure Machine</h1>
-
-<p>Built for Meghal from Sydney 🌏</p>
-
-<div id="level">
-Adventure Level: 1 | Points: 0
-</div>
-
-<div class="section">
-
-<h2>😂 Joke Machine</h2>
-
-<button onclick="newJoke()">I'm bored</button>
-
-<div id="joke"></div>
-
-<button id="revealBtn" onclick="reveal()" style="display:none;">Reveal Punchline</button>
-
-<div id="answer"></div>
-
-</div>
-
-<div class="section">
-
-<h2>🎡 Spin Adventure Wheel</h2>
-
-<button onclick="spinWheel()">Spin</button>
-
-<div id="wheel"></div>
-
-</div>
-
-<div class="section">
-
-<h2>☕ Café Suggestion</h2>
-
-<button onclick="cafe()">Find Café</button>
-
-<div id="cafe"></div>
-
-</div>
-
-<div class="section">
-
-<h2>✈️ Travel Generator</h2>
-
-<button onclick="travel()">Next Destination</button>
-
-<div id="travel"></div>
-
-</div>
-
-<div class="section">
-
-<h2>☕ Coffee Date Probability</h2>
-
-<button onclick="dateChance()">Calculate</button>
-
-<div id="dateChance"></div>
-
-</div>
-
-<div class="section">
-
-<h2>🤖 Chat with Meghal AI</h2>
-
-<input id="chatInput" placeholder="Say something...">
-<button onclick="chat()">Send</button>
-
-<div id="chatBox" style="margin-top:20px;font-size:20px;"></div>
-
-</div>
-
-<div id="secret"></div>
 
 </div>
 
 <script>
 
-setTimeout(()=>{
-document.getElementById("loader").style.display="none"
-document.getElementById("app").style.display="block"
-},3000)
-
-let points = 0
-let level = 1
-
-function addPoints(p){
-
-points += p
-level = Math.floor(points/10)+1
-
-document.getElementById("level").innerText =
-"Adventure Level: " + level + " | Points: " + points
-
-if(level >= 10){
-document.getElementById("secret").innerText =
-"🎉 SECRET LEVEL UNLOCKED\nThe AI recommends Meghal celebrate with juice at a cute café.\nRecommended companion: the guy who built this machine."
-}
-
-}
+let jokesSeen = 0
 
 const jokes = [
-{q:"Why don't eggs tell jokes?",a:"They'd crack each other up."},
-{q:"Why did the coffee file a police report?",a:"It got mugged."},
-{q:"Why did the bicycle fall over?",a:"It was two tired."},
-{q:"Why can't your nose be 12 inches long?",a:"Because then it would be a foot."},
-{q:"Why did the tomato turn red?",a:"Because it saw the salad dressing."}
+
+"Why don't eggs tell jokes? Because they'd crack up.",
+"What do you call fake spaghetti? An impasta.",
+"Why did the coffee file a police report? It got mugged.",
+"What do you call a bear with no teeth? A gummy bear.",
+"What did the ocean say to the beach? Nothing, it waved.",
+"Why did the scarecrow win an award? Because he was outstanding in his field.",
+"Why can't your nose be 12 inches long? Because then it would be a foot.",
+"What do you call cheese that isn't yours? Nacho cheese.",
+"Why did the bicycle fall over? It was two tired.",
+"What did the grape do when stepped on? Nothing but let out a little wine.",
+"Why did the tomato blush? Because it saw the salad dressing.",
+"What do you call a lazy kangaroo? A pouch potato.",
+"Why don't skeletons fight each other? They don't have the guts.",
+"What did the zero say to the eight? Nice belt.",
+"Why did the math book look sad? Because it had too many problems."
+
 ]
 
-let current = null
+const adventures = [
 
-function newJoke(){
+"Juice tasting challenge 🧃",
+"Midnight dessert hunt 🍰",
+"Random beach walk 🌊",
+"Try cooking eggs 3 different ways 🍳",
+"Find the best cafe in Sydney ☕",
+"Sunset photo mission 📸",
+"Explore a place you've never been 🚶",
+"Board game + snacks night 🎲"
 
-current = jokes[Math.floor(Math.random()*jokes.length)]
-
-document.getElementById("joke").innerText = current.q
-document.getElementById("answer").innerText = ""
-document.getElementById("revealBtn").style.display="inline-block"
-
-addPoints(1)
-
-}
-
-function reveal(){
-document.getElementById("answer").innerText = current.a
-}
-
-const wheel = [
-"Explore a new street",
-"Find a cute café",
-"Drink fresh juice",
-"Plan a weekend trip",
-"Take photos around the city",
-"Try a new egg dish"
 ]
 
-function spinWheel(){
+const travelIdeas = [
 
-let result = wheel[Math.floor(Math.random()*wheel.length)]
+"Japan sushi adventure 🇯🇵",
+"Italy pizza tour 🇮🇹",
+"Paris cafe hopping 🇫🇷",
+"Bali island escape 🌴",
+"Iceland northern lights ❄️",
+"Greek island hopping 🇬🇷"
 
-let wheelDiv = document.getElementById("wheel")
-
-wheelDiv.classList.add("spin")
-
-setTimeout(()=>{
-wheelDiv.classList.remove("spin")
-wheelDiv.innerText = "Adventure: " + result
-},800)
-
-addPoints(2)
-
-}
+]
 
 const cafes = [
-"Plant café with lots of sunlight ☀️",
-"Hidden street café ☕",
-"Juice bar with tropical drinks 🍹",
-"Café with amazing egg sandwiches 🍳"
+
+"Hidden cafe exploration ☕",
+"Order the weirdest juice on the menu 🧃",
+"Find best eggs benedict in Sydney 🍳",
+"Coffee + people watching ☕",
+"Pastry tasting mission 🥐"
+
 ]
 
-function cafe(){
+function spinAdventure(){
 
-let place = cafes[Math.floor(Math.random()*cafes.length)]
+let wheel = document.getElementById("wheel")
+wheel.style.display="block"
 
-document.getElementById("cafe").innerText =
-"Suggestion for Meghal: " + place
+setTimeout(()=>{
 
-addPoints(2)
+wheel.style.display="none"
+
+let random = adventures[Math.floor(Math.random()*adventures.length)]
+
+document.getElementById("result").innerText =
+"Adventure idea: " + random
+
+},1200)
 
 }
 
-const destinations = [
-"Tokyo 🇯🇵",
-"Paris 🇫🇷",
-"Bali 🇮🇩",
-"Barcelona 🇪🇸",
-"Rome 🇮🇹"
-]
+function getJoke(){
+
+let random = jokes[Math.floor(Math.random()*jokes.length)]
+
+jokesSeen++
+
+document.getElementById("result").innerText = random
+
+document.getElementById("counter").innerText =
+"Jokes unlocked: " + jokesSeen
+
+}
 
 function travel(){
 
-let place = destinations[Math.floor(Math.random()*destinations.length)]
+let random = travelIdeas[Math.floor(Math.random()*travelIdeas.length)]
 
-document.getElementById("travel").innerText =
-"Next adventure: " + place
-
-addPoints(2)
+document.getElementById("result").innerText =
+"Future travel idea: " + random
 
 }
 
-function dateChance(){
+function cafe(){
 
-let percent = Math.floor(Math.random()*51)+50
+let random = cafes[Math.floor(Math.random()*cafes.length)]
 
-document.getElementById("dateChance").innerText =
-"Probability Meghal should go to a cute café today: " + percent + "%"
-
-addPoints(1)
+document.getElementById("result").innerText =
+"Cafe mission: " + random
 
 }
 
-function chat(){
+function secret(){
 
-let input = document.getElementById("chatInput").value.toLowerCase()
-let response = ""
-
-if(input.includes("bored"))
-response="Meghal should spin the adventure wheel 🎡"
-
-else if(input.includes("coffee"))
-response="AI recommendation: cute café + fresh juice ☕🍹"
-
-else if(input.includes("travel"))
-response="Destination suggestion: Bali 🌴"
-
-else if(input.includes("hello"))
-response="Hello Meghal 👋 Ready for an adventure?"
-
-else
-response="AI is still learning about Meghal 😄 Try asking about travel or coffee."
-
-document.getElementById("chatBox").innerText=response
+document.getElementById("result").innerHTML =
+"Important question... 👀 <br><br> Would you like to go on a small adventure with me this week?"
 
 }
 
@@ -320,4 +234,3 @@ document.getElementById("chatBox").innerText=response
 
 </body>
 </html>
-```
