@@ -6,194 +6,173 @@
 <title>For Meghal 🌼</title>
 
 <style>
-body{
-margin:0;
-font-family:"Comic Sans MS",cursive;
-background:linear-gradient(135deg,#fff7cc,#fff2a8);
-text-align:center;
+body {
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #fff8d6, #fff2a8);
+    text-align:center;
 }
 
-.nav button{
-margin:5px;
-padding:8px 12px;
-border:none;
-border-radius:12px;
-background:#ffe066;
-cursor:pointer;
+/* HERO */
+.hero {
+    padding:40px 20px;
 }
 
-.card{
-background:#fffdf0;
-padding:20px;
-border-radius:20px;
-max-width:420px;
-margin:20px auto;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
+.hero img {
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    animation: float 3s ease-in-out infinite;
 }
 
-.hidden{display:none;}
-
-.character{
-width:100px;height:100px;
-background:#ffe066;
-border-radius:50%;
-margin:10px auto;
-position:relative;
-}
-.eye{
-width:10px;height:10px;background:black;border-radius:50%;
-position:absolute;top:35px;
-}
-.eye.left{left:30px;}
-.eye.right{right:30px;}
-.mouth{
-width:40px;height:20px;
-border-bottom:3px solid black;
-border-radius:0 0 50px 50px;
-position:absolute;bottom:25px;left:30px;
+@keyframes float {
+    0% { transform: translateY(0px);}
+    50% { transform: translateY(-10px);}
+    100% { transform: translateY(0px);}
 }
 
-.option{
-display:block;
-margin:8px auto;
-padding:10px;
-border:none;
-border-radius:10px;
-background:#fff3b0;
-width:80%;
-cursor:pointer;
+/* CARD */
+.card {
+    background:white;
+    margin:20px auto;
+    padding:20px;
+    max-width:420px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
 }
 
-#yesBtn{background:#ffb703;}
-#noBtn{background:#ffe066;position:relative;}
+/* BUTTON */
+button {
+    padding:12px 16px;
+    border:none;
+    border-radius:12px;
+    margin:8px;
+    background:#ffe066;
+    cursor:pointer;
+    font-size:15px;
+}
 
-input[type="range"]{width:80%;}
+/* SLIDER */
+.slider img {
+    width:100%;
+    border-radius:15px;
+    margin-top:10px;
+}
+
+/* CHAT */
+.chat {
+    text-align:left;
+}
+.msg {
+    background:#f1f1f1;
+    padding:10px;
+    border-radius:10px;
+    margin:6px 0;
+}
+
+/* FINAL */
+#yesBtn {
+    background:#ffb703;
+}
+#noBtn {
+    position:relative;
+}
+
+/* TEXT */
+.small {
+    font-size:14px;
+    opacity:0.7;
+}
 </style>
 </head>
 
 <body>
 
-<div class="nav">
-<button onclick="showPage('jokes')">😂 Jokes</button>
-<button onclick="showPage('quiz')">🧠 Quiz</button>
-<button onclick="showPage('rapid')">⚡ Rapid</button>
-<button onclick="showPage('calc')">💘 Meter</button>
-<button onclick="showPage('cafe')">☕</button>
-<button onclick="showPage('travel')">✈️</button>
+<!-- HERO -->
+<div class="hero">
+    <img src="photo1.jpg">
+    <h2>Hey Meghal 😄</h2>
+    <p class="small">This might be unnecessary… but I had to try</p>
+</div>
+
+<!-- PHOTO -->
+<div class="card">
+    <h3>This moment >> 😌</h3>
+    <div class="slider">
+        <img src="photo1.jpg">
+    </div>
 </div>
 
 <!-- JOKES -->
-<div id="jokes" class="card">
+<div class="card">
+    <h3>Choose your humor 👇</h3>
 
-<div class="character">
-<div class="eye left"></div>
-<div class="eye right"></div>
-<div class="mouth" id="mouth"></div>
+    <button onclick="startJoke('good')">😂 Good</button>
+    <button onclick="startJoke('lame')">😏 Lame</button>
+    <button onclick="startJoke('knock')">🚪 Knock</button>
+
+    <p id="jokeText"></p>
+    <button onclick="nextJoke()">Tap for another 😂</button>
 </div>
 
-<h2>👑 Lady Meghal’s Joke Court</h2>
+<!-- CHAT -->
+<div class="card">
+    <h3>Real conversation btw 😭</h3>
 
-<p>Alright… I think you want to laugh 😌</p>
-
-<button class="option" onclick="startJokes('good')">😂 Good Joke</button>
-<button class="option" onclick="startJokes('lame')">😏 Lame Joke</button>
-<button class="option" onclick="startJokes('knock')">🚪 Knock Knock</button>
-
-<p id="jokeText"></p>
-
-<button id="nextJokeBtn" class="option hidden" onclick="nextJoke()">
-😂 Tap for another laugh
-</button>
-
+    <div class="chat">
+        <div class="msg">I had a question…</div>
+        <div class="msg">But normal people text</div>
+        <div class="msg">I made a whole website 😌</div>
+    </div>
 </div>
 
-<!-- QUIZ -->
-<div id="quiz" class="card hidden">
-<h2>Quick Question 😏</h2>
-<p id="qText"></p>
-<div id="qOptions"></div>
-<p id="qFeedback"></p>
-</div>
+<!-- DATE IDEAS -->
+<div class="card">
+    <h3>Pick a vibe 🌍</h3>
 
-<!-- RAPID -->
-<div id="rapid" class="card hidden">
-<h2>Rapid Fire ⚡</h2>
-<p id="rapidText">Ready?</p>
-<button onclick="startRapid()">Start</button>
-</div>
+    <button onclick="idea('cafe')">☕ Cafe</button>
+    <button onclick="idea('travel')">✈️ Travel</button>
 
-<!-- METER -->
-<div id="calc" class="card hidden">
-<h2>Excitement Meter 💘</h2>
-<input type="range" min="0" max="100" value="50" id="slider" oninput="updateMeter()">
-<p id="meterText">50%… hmm 🤨</p>
-</div>
-
-<!-- CAFE -->
-<div id="cafe" class="card hidden">
-<h2>Cafe Picker ☕</h2>
-<button onclick="randomCafe()">Pick</button>
-<p id="cafeText"></p>
-</div>
-
-<!-- TRAVEL -->
-<div id="travel" class="card hidden">
-<h2>Travel Picker ✈️</h2>
-<button onclick="randomTravel()">Pick</button>
-<p id="travelText"></p>
+    <p id="ideaText"></p>
 </div>
 
 <!-- FINAL -->
-<div id="final" class="card hidden">
-<h2>One last thing 👀</h2>
-<p>Would you go on a date with me? ✨</p>
+<div class="card">
+    <h2>Okay serious question 👀</h2>
+    <p>Would you go on a date with me?</p>
 
-<button id="yesBtn">YES 😄</button>
-<button id="noBtn">NO 🙃</button>
+    <button id="yesBtn">YES 😄</button>
+    <button id="noBtn">NO 🙃</button>
 
-<p id="finalText"></p>
+    <p id="finalText"></p>
 </div>
 
 <script>
 
-/* PAGE */
-function showPage(p){
-["jokes","quiz","rapid","calc","cafe","travel","final"].forEach(id=>{
-document.getElementById(id).classList.add("hidden");
-});
-document.getElementById(p).classList.remove("hidden");
-}
+/* JOKES */
+let type = "";
 
-/* JOKE SYSTEM */
-let currentType="";
-
-const goodJokes=[
-"Are you made of copper and tellurium? Because you’re Cu-Te 😏",
-"I had a whole day planned… then I got distracted by a thought I didn’t mind 😄",
-"Some people make your day better just by existing… weird how that works",
-"I don’t usually get distracted easily… but clearly there are exceptions",
-"I think my brain just took a break and decided to smile for no reason"
+const good = [
+"Are you made of copper and tellurium? Because you're Cu-Te 😏",
+"You seem like someone worth cancelling plans for",
+"I had a full plan today… but something better came to mind"
 ];
 
-const lameJokes=[
-"I tried to come up with a better joke… this is what survived 😭",
-"This joke is so bad it deserves an apology 😌",
-"I had something funny… it left halfway 😒",
-"If bad jokes were an art form… this would still be questionable",
-"I promise I tried… just not very successfully 😏"
+const lame = [
+"I tried to be funny… this happened 😭",
+"This joke is bad… I warned you",
+"I regret this already 😌"
 ];
 
-const knockJokes=[
-["Knock knock","Who’s there?","Lettuce","Lettuce who?","Lettuce go out sometime 😄"],
-["Knock knock","Who’s there?","Olive","Olive who?","Olive the idea of spending time together 😏"],
-["Knock knock","Who’s there?","Tank","Tank who?","You’re welcome 😌"],
-["Knock knock","Who’s there?","Boo","Boo who?","No need to cry… it’s just a joke 😄"]
+const knock = [
+["Knock knock","Who’s there?","Lettuce","Lettuce who?","Lettuce go out sometime 😏"]
 ];
 
-function startJokes(type){
-currentType=type;
+function startJoke(t){
+type=t;
 showJoke();
-nextJokeBtn.classList.remove("hidden");
 }
 
 function nextJoke(){
@@ -201,29 +180,17 @@ showJoke();
 }
 
 function showJoke(){
-
-if(currentType==="good"){
-jokeText.innerText=random(goodJokes);
-setFace("happy");
-}
-
-if(currentType==="lame"){
-jokeText.innerText=random(lameJokes);
-setFace("awkward");
-}
-
-if(currentType==="knock"){
-playKnock(random(knockJokes));
-setFace("happy");
-}
+if(type==="good") jokeText.innerText=random(good);
+if(type==="lame") jokeText.innerText=random(lame);
+if(type==="knock") playKnock(random(knock));
 }
 
 function playKnock(j){
 let i=0;
-let interval=setInterval(()=>{
+let int=setInterval(()=>{
 jokeText.innerText=j[i];
 i++;
-if(i>=j.length) clearInterval(interval);
+if(i>=j.length) clearInterval(int);
 },900);
 }
 
@@ -231,90 +198,26 @@ function random(arr){
 return arr[Math.floor(Math.random()*arr.length)];
 }
 
-/* FACE */
-function setFace(type){
-let m=document.getElementById("mouth");
-if(type==="happy"){
-m.style.borderBottom="3px solid black";
-m.style.borderTop="none";
-}
-if(type==="awkward"){
-m.style.borderBottom="none";
-m.style.borderTop="3px solid black";
-}
+/* IDEA */
+const cafes = ["Juice + pancakes 🍓","Cute brunch spot ☕","Dessert + coffee 🍰"];
+const travel = ["Beach walk 🌊","Mountain chill 🌄","City exploring 🗺️"];
+
+function idea(type){
+if(type==="cafe") ideaText.innerText=random(cafes);
+if(type==="travel") ideaText.innerText=random(travel);
 }
 
-/* QUIZ */
-const quiz=[
-{q:"Why did this site exist?",o:["Timepass","Coding practice","There’s a reason 😏"],c:2},
-{q:"Best plan?",o:["Stay home","Scroll","Go out & vibe 😄"],c:2}
-];
-
-let qi=0;
-
-function loadQ(){
-let d=quiz[qi];
-qText.innerText=d.q;
-qOptions.innerHTML="";
-d.o.forEach((opt,i)=>{
-let b=document.createElement("button");
-b.className="option";
-b.innerText=opt;
-b.onclick=()=>{
-qFeedback.innerText=(i===d.c)?"Correct 😄":"Hmm try again 😌";
-setTimeout(()=>{
-qi++;
-if(qi<quiz.length){loadQ();qFeedback.innerText="";}
-else{showPage("final");}
-},1000);
-};
-qOptions.appendChild(b);
-});
-}
-loadQ();
-
-/* RAPID */
-function startRapid(){
-let c=0;
-let i=setInterval(()=>{
-startJokes("lame");
-c++;
-if(c>5) clearInterval(i);
-},700);
-}
-
-/* METER */
-function updateMeter(){
-let v=slider.value;
-if(v<30) meterText.innerText=v+"%… okay that hurts 😒";
-else if(v<70) meterText.innerText=v+"%… I’ll take it 😌";
-else meterText.innerText=v+"%… now we’re talking 😏";
-}
-
-/* CAFE */
-const cafes=["Juice + pancakes 🍓","Cute brunch spot ☕","Dessert + coffee 🍰"];
-function randomCafe(){
-cafeText.innerText=random(cafes);
-}
-
-/* TRAVEL */
-const travel=["Beach 🌊","Mountains 🌄","City exploring 🗺️"];
-function randomTravel(){
-travelText.innerText=random(travel);
-}
-
-/* NO BUTTON */
-function move(){
+/* NO BUTTON MOVE */
+noBtn.onmouseover = ()=>{
 let x=Math.random()*200-100;
 let y=Math.random()*200-100;
 noBtn.style.transform=`translate(${x}px,${y}px)`;
 }
-noBtn.addEventListener("mouseover",move);
 
 /* YES */
-yesBtn.onclick=()=>{
-finalText.innerText="Alright… now I actually have to plan something good 😭✨";
-};
+yesBtn.onclick = ()=>{
+finalText.innerText="Okay… now I actually have to plan something good 😭✨";
+}
 
 </script>
 
