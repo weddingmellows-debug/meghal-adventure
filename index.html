@@ -1,232 +1,200 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-<title>Meghal's Adventure Machine</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Question For Meghal</title>
 
 <style>
 
 body{
 font-family: Arial, sans-serif;
+background: linear-gradient(135deg,#ff9a9e,#fad0c4,#fbc2eb);
 text-align:center;
-background: linear-gradient(135deg,#ff9a9e,#fad0c4,#fad0c4,#fbc2eb);
-padding:40px;
+margin:0;
+padding:0;
+}
+
+.container{
+margin-top:120px;
 }
 
 h1{
 font-size:42px;
-margin-bottom:10px;
 }
 
 p{
-font-size:18px;
-}
-
-.card{
-background:white;
-padding:35px;
-border-radius:22px;
-max-width:700px;
-margin:auto;
-box-shadow:0 10px 35px rgba(0,0,0,0.2);
-}
-
-button{
-padding:15px 26px;
-margin:10px;
-font-size:18px;
-border:none;
-border-radius:12px;
-cursor:pointer;
-background:#ff6f91;
-color:white;
-transition:0.2s;
-}
-
-button:hover{
-transform:scale(1.1);
-background:#ff4f7b;
-}
-
-#result{
-margin-top:25px;
 font-size:22px;
 }
 
-#counter{
-margin-top:10px;
-font-size:16px;
-color:gray;
+button{
+padding:15px 28px;
+font-size:20px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+margin:10px;
 }
 
-.wheel{
-font-size:70px;
-margin:20px;
-animation:spin 1s linear infinite;
+#startBtn{
+background:#ff6b8a;
+color:white;
+}
+
+#yesBtn{
+background:#4CAF50;
+color:white;
+}
+
+#noBtn{
+background:#ff4d6d;
+color:white;
+position:absolute;
+}
+
+.buttons{
+margin-top:40px;
+position:relative;
+height:200px;
+}
+
+.tabs{
+margin-top:70px;
+}
+
+.tabButton{
+background:#ff7a9c;
+color:white;
+}
+
+.tabContent{
 display:none;
-}
-
-@keyframes spin{
-0%{transform:rotate(0deg)}
-100%{transform:rotate(360deg)}
-}
-
-.footer{
-margin-top:25px;
-font-size:14px;
-color:gray;
+font-size:20px;
+margin-top:20px;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="card">
+<div class="container" id="intro">
 
-<h1>🎉 Meghal's Adventure Machine 🎉</h1>
+<h1>👋 Hello Meghal</h1>
 
 <p>
-Built specially for <b>Meghal</b> —  
-Sydney explorer 🌏, travel lover ✈️,  
-juice enthusiast 🧃, egg food expert 🍳.
+The creator of this website wants to ask you something...
 </p>
 
-<div class="wheel" id="wheel">🎡</div>
+<p>
+But before that — press the button below.
+</p>
 
-<button onclick="spinAdventure()">🎡 Spin Adventure</button>
+<button id="startBtn" onclick="startQuestion()">Continue</button>
 
-<button onclick="getJoke()">😂 Random Joke</button>
+</div>
 
-<button onclick="travel()">🌍 Travel Dream</button>
+<div class="container" id="question" style="display:none">
 
-<button onclick="cafe()">☕ Cafe Mission</button>
+<h1>Important Question</h1>
 
-<button onclick="secret()">💖 Secret Button</button>
+<p>
+Would you like to go on a fun little adventure date with me? 😊
+</p>
 
-<div id="result"></div>
+<div class="buttons">
 
-<div id="counter"></div>
+<button id="yesBtn" onclick="sayYes()">YES</button>
 
-<div class="footer">
-Warning: excessive use may cause spontaneous adventures.
+<button id="noBtn">NO</button>
+
+</div>
+
+<div class="tabs">
+
+<button class="tabButton" onclick="openTab('joke')">Joke</button>
+<button class="tabButton" onclick="openTab('cafe')">Cafe Idea</button>
+<button class="tabButton" onclick="openTab('travel')">Travel Dream</button>
+
+<div id="joke" class="tabContent"></div>
+<div id="cafe" class="tabContent"></div>
+<div id="travel" class="tabContent"></div>
+
 </div>
 
 </div>
 
 <script>
 
-let jokesSeen = 0
+function startQuestion(){
 
-const jokes = [
+document.getElementById("intro").style.display="none"
+document.getElementById("question").style.display="block"
 
+}
+
+function sayYes(){
+
+document.body.innerHTML = `
+<h1 style="margin-top:150px;">🎉 YAY! 🎉</h1>
+<p style="font-size:28px;">Adventure date confirmed 😄</p>
+<p style="font-size:22px;">Now we just need to decide where.</p>
+`;
+
+}
+
+const noBtn=document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover",moveButton);
+noBtn.addEventListener("touchstart",moveButton);
+
+function moveButton(){
+
+let x=Math.random()*window.innerWidth*0.7;
+let y=Math.random()*200;
+
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+
+}
+
+const jokes=[
 "Why don't eggs tell jokes? Because they'd crack up.",
 "What do you call fake spaghetti? An impasta.",
 "Why did the coffee file a police report? It got mugged.",
-"What do you call a bear with no teeth? A gummy bear.",
-"What did the ocean say to the beach? Nothing, it waved.",
-"Why did the scarecrow win an award? Because he was outstanding in his field.",
-"Why can't your nose be 12 inches long? Because then it would be a foot.",
-"What do you call cheese that isn't yours? Nacho cheese.",
-"Why did the bicycle fall over? It was two tired.",
-"What did the grape do when stepped on? Nothing but let out a little wine.",
-"Why did the tomato blush? Because it saw the salad dressing.",
-"What do you call a lazy kangaroo? A pouch potato.",
-"Why don't skeletons fight each other? They don't have the guts.",
-"What did the zero say to the eight? Nice belt.",
-"Why did the math book look sad? Because it had too many problems."
+"Why did the bicycle fall over? It was two tired."
+];
 
-]
-
-const adventures = [
-
+const cafes=[
+"Find a hidden cafe in Sydney ☕",
 "Juice tasting challenge 🧃",
-"Midnight dessert hunt 🍰",
-"Random beach walk 🌊",
-"Try cooking eggs 3 different ways 🍳",
-"Find the best cafe in Sydney ☕",
-"Sunset photo mission 📸",
-"Explore a place you've never been 🚶",
-"Board game + snacks night 🎲"
+"Best eggs benedict hunt 🍳"
+];
 
-]
-
-const travelIdeas = [
-
+const travel=[
 "Japan sushi adventure 🇯🇵",
 "Italy pizza tour 🇮🇹",
-"Paris cafe hopping 🇫🇷",
-"Bali island escape 🌴",
-"Iceland northern lights ❄️",
-"Greek island hopping 🇬🇷"
+"Bali island escape 🌴"
+];
 
-]
+function openTab(tab){
 
-const cafes = [
+let content="";
 
-"Hidden cafe exploration ☕",
-"Order the weirdest juice on the menu 🧃",
-"Find best eggs benedict in Sydney 🍳",
-"Coffee + people watching ☕",
-"Pastry tasting mission 🥐"
-
-]
-
-function spinAdventure(){
-
-let wheel = document.getElementById("wheel")
-wheel.style.display="block"
-
-setTimeout(()=>{
-
-wheel.style.display="none"
-
-let random = adventures[Math.floor(Math.random()*adventures.length)]
-
-document.getElementById("result").innerText =
-"Adventure idea: " + random
-
-},1200)
-
+if(tab==="joke"){
+content=jokes[Math.floor(Math.random()*jokes.length)];
 }
 
-function getJoke(){
-
-let random = jokes[Math.floor(Math.random()*jokes.length)]
-
-jokesSeen++
-
-document.getElementById("result").innerText = random
-
-document.getElementById("counter").innerText =
-"Jokes unlocked: " + jokesSeen
-
+if(tab==="cafe"){
+content=cafes[Math.floor(Math.random()*cafes.length)];
 }
 
-function travel(){
-
-let random = travelIdeas[Math.floor(Math.random()*travelIdeas.length)]
-
-document.getElementById("result").innerText =
-"Future travel idea: " + random
-
+if(tab==="travel"){
+content=travel[Math.floor(Math.random()*travel.length)];
 }
 
-function cafe(){
-
-let random = cafes[Math.floor(Math.random()*cafes.length)]
-
-document.getElementById("result").innerText =
-"Cafe mission: " + random
-
-}
-
-function secret(){
-
-document.getElementById("result").innerHTML =
-"Important question... 👀 <br><br> Would you like to go on a small adventure with me this week?"
+document.getElementById(tab).style.display="block";
+document.getElementById(tab).innerText=content;
 
 }
 
