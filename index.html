@@ -3,200 +3,247 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Question For Meghal</title>
+<title>For Meghal 😄</title>
 
 <style>
-
-body{
-font-family: Arial, sans-serif;
-background: linear-gradient(135deg,#ff9a9e,#fad0c4,#fbc2eb);
-text-align:center;
-margin:0;
-padding:0;
+body {
+    margin: 0;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    background: linear-gradient(135deg, #ffeef3, #fef9ff);
+    text-align: center;
 }
 
-.container{
-margin-top:120px;
+/* Corner note */
+.corner-note {
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    font-size: 12px;
+    opacity: 0.6;
+    cursor: pointer;
 }
 
-h1{
-font-size:42px;
+/* Navigation */
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    flex-wrap: wrap;
 }
 
-p{
-font-size:22px;
+.nav button {
+    background: #ffd6e0;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 15px;
+    cursor: pointer;
 }
 
-button{
-padding:15px 28px;
-font-size:20px;
-border:none;
-border-radius:12px;
-cursor:pointer;
-margin:10px;
+/* Card */
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 25px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    max-width: 420px;
+    margin: 20px auto;
 }
 
-#startBtn{
-background:#ff6b8a;
-color:white;
+.hidden {
+    display: none;
 }
 
-#yesBtn{
-background:#4CAF50;
-color:white;
+img.profile {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
 }
 
-#noBtn{
-background:#ff4d6d;
-color:white;
-position:absolute;
+/* Buttons */
+button.main {
+    padding: 12px 20px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
 }
 
-.buttons{
-margin-top:40px;
-position:relative;
-height:200px;
+#yesBtn {
+    background: #ff6b81;
+    color: white;
 }
 
-.tabs{
-margin-top:70px;
+#noBtn {
+    background: #dfe6e9;
+    position: relative;
 }
 
-.tabButton{
-background:#ff7a9c;
-color:white;
+/* Slider */
+input[type="range"] {
+    width: 80%;
 }
 
-.tabContent{
-display:none;
-font-size:20px;
-margin-top:20px;
+/* Cartoon emoji style */
+.emoji {
+    font-size: 30px;
 }
-
 </style>
 </head>
 
 <body>
 
-<div class="container" id="intro">
-
-<h1>👋 Hello Meghal</h1>
-
-<p>
-The creator of this website wants to ask you something...
-</p>
-
-<p>
-But before that — press the button below.
-</p>
-
-<button id="startBtn" onclick="startQuestion()">Continue</button>
-
+<div class="corner-note" onclick="showPage('question')">
+    psst… Meghal 👀
 </div>
 
-<div class="container" id="question" style="display:none">
-
-<h1>Important Question</h1>
-
-<p>
-Would you like to go on a fun little adventure date with me? 😊
-</p>
-
-<div class="buttons">
-
-<button id="yesBtn" onclick="sayYes()">YES</button>
-
-<button id="noBtn">NO</button>
-
+<div class="nav">
+    <button onclick="showPage('jokes')">😂 Jokes</button>
+    <button onclick="showPage('calculator')">⚡ Excitement</button>
+    <button onclick="showPage('cafe')">☕ Cafe</button>
+    <button onclick="showPage('travel')">✈️ Travel</button>
 </div>
 
-<div class="tabs">
+<!-- JOKES -->
+<div id="jokes" class="card">
+    <img src="meghal.jpg" class="profile">
+    <h2>Meghal’s Personal Joke Zone 😌</h2>
+    <p style="font-size:13px;opacity:0.6;">
+        73% lame, 27% effort… all for you 😄
+    </p>
 
-<button class="tabButton" onclick="openTab('joke')">Joke</button>
-<button class="tabButton" onclick="openTab('cafe')">Cafe Idea</button>
-<button class="tabButton" onclick="openTab('travel')">Travel Dream</button>
-
-<div id="joke" class="tabContent"></div>
-<div id="cafe" class="tabContent"></div>
-<div id="travel" class="tabContent"></div>
-
+    <p id="jokeText">Click below… regret guaranteed</p>
+    <button class="main" onclick="newJoke()">Give me a joke</button>
 </div>
 
+<!-- CALCULATOR -->
+<div id="calculator" class="card hidden">
+    <h2>Excitement Meter 😏</h2>
+    <p>How excited are you to go out with me, Meghal?</p>
+
+    <input type="range" min="0" max="100" value="50" id="slider" oninput="updateExcitement()">
+    <p id="exciteResult">50%… hmm suspicious 🤨</p>
+</div>
+
+<!-- CAFE -->
+<div id="cafe" class="card hidden">
+    <h2>Cute Cafe Ideas ☕</h2>
+    <p id="cafeText">Click for something cute 😄</p>
+    <button class="main" onclick="newCafe()">Suggest cafe</button>
+</div>
+
+<!-- TRAVEL -->
+<div id="travel" class="card hidden">
+    <h2>Travel Ideas ✈️</h2>
+    <p id="travelText">Let’s run away from reality 😌</p>
+    <button class="main" onclick="newTravel()">Suggest trip</button>
+</div>
+
+<!-- QUESTION -->
+<div id="question" class="card hidden">
+    <h2>Okay Meghal… serious moment 👀</h2>
+    <p>Will you go on a cute adventure/date with me? ✨</p>
+
+    <button id="yesBtn" class="main">YES 😄</button>
+    <button id="noBtn" class="main">NO 🙃</button>
+
+    <p id="response" class="hidden"></p>
 </div>
 
 <script>
 
-function startQuestion(){
-
-document.getElementById("intro").style.display="none"
-document.getElementById("question").style.display="block"
-
+/* PAGE SWITCH */
+function showPage(page){
+    ["jokes","calculator","cafe","travel","question"].forEach(p=>{
+        document.getElementById(p).classList.add("hidden");
+    });
+    document.getElementById(page).classList.remove("hidden");
 }
 
-function sayYes(){
+/* JOKES */
+const jokes = [
+    "Meghal, are you WiFi? Because I’m feeling a connection 📶",
+    "I made this instead of texting you… growth 📈",
+    "Meghal you must be tired… running in my mind AND this site 😭",
+    "You’re like my camera… I keep focusing on you 📸",
+    "Breaking: Meghal too cute for normal conversations 😌",
+    "This joke was better in my head… Meghal distracted me 😒"
+];
 
-document.body.innerHTML = `
-<h1 style="margin-top:150px;">🎉 YAY! 🎉</h1>
-<p style="font-size:28px;">Adventure date confirmed 😄</p>
-<p style="font-size:22px;">Now we just need to decide where.</p>
-`;
-
+function newJoke(){
+    jokeText.innerText = jokes[Math.floor(Math.random()*jokes.length)];
 }
 
-const noBtn=document.getElementById("noBtn");
+/* CAFE */
+const cafes = [
+    "Sydney style brunch + juice + pancakes 🍓",
+    "Aesthetic cafe hopping with zero plans ☕",
+    "Dessert + coffee + judging people silently 😌",
+    "Cute corner cafe + long talks 🌸"
+];
 
-noBtn.addEventListener("mouseover",moveButton);
-noBtn.addEventListener("touchstart",moveButton);
+function newCafe(){
+    cafeText.innerText = cafes[Math.floor(Math.random()*cafes.length)];
+}
 
+/* TRAVEL */
+const travel = [
+    "Beach + sunset + juice stops 🌊",
+    "Get lost in a random city 🗺️",
+    "Mountains + chill + no phone 😌",
+    "Spontaneous road trip energy 🚗"
+];
+
+function newTravel(){
+    travelText.innerText = travel[Math.floor(Math.random()*travel.length)];
+}
+
+/* EXCITEMENT */
+function updateExcitement(){
+    let val = slider.value;
+    let text = "";
+
+    if(val < 30) text = val + "%… okay Meghal that’s rude 😒";
+    else if(val < 70) text = val + "%… I’ll take it 😌";
+    else if(val < 90) text = val + "%… now we’re talking 😏";
+    else text = val + "%… calm down Meghal 😭✨";
+
+    exciteResult.innerText = text;
+}
+
+/* NO BUTTON ESCAPE */
 function moveButton(){
-
-let x=Math.random()*window.innerWidth*0.7;
-let y=Math.random()*200;
-
-noBtn.style.left=x+"px";
-noBtn.style.top=y+"px";
-
+    const x = Math.random()*300 - 150;
+    const y = Math.random()*200 - 100;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
 }
 
-const jokes=[
-"Why don't eggs tell jokes? Because they'd crack up.",
-"What do you call fake spaghetti? An impasta.",
-"Why did the coffee file a police report? It got mugged.",
-"Why did the bicycle fall over? It was two tired."
-];
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("touchstart", moveButton);
 
-const cafes=[
-"Find a hidden cafe in Sydney ☕",
-"Juice tasting challenge 🧃",
-"Best eggs benedict hunt 🍳"
-];
+/* YES CLICK */
+yesBtn.onclick = () => {
+    response.classList.remove("hidden");
+    response.innerHTML = "Okay Meghal this is officially cute 😭✨<br>Now I actually have to plan something good…";
 
-const travel=[
-"Japan sushi adventure 🇯🇵",
-"Italy pizza tour 🇮🇹",
-"Bali island escape 🌴"
-];
+    // Confetti 🎉
+    for(let i=0;i<50;i++){
+        let conf = document.createElement("div");
+        conf.style.position = "fixed";
+        conf.style.width = "8px";
+        conf.style.height = "8px";
+        conf.style.background = "#ff6b81";
+        conf.style.top = Math.random()*100 + "%";
+        conf.style.left = Math.random()*100 + "%";
+        conf.style.opacity = 0.7;
+        conf.style.borderRadius = "50%";
+        document.body.appendChild(conf);
 
-function openTab(tab){
-
-let content="";
-
-if(tab==="joke"){
-content=jokes[Math.floor(Math.random()*jokes.length)];
-}
-
-if(tab==="cafe"){
-content=cafes[Math.floor(Math.random()*cafes.length)];
-}
-
-if(tab==="travel"){
-content=travel[Math.floor(Math.random()*travel.length)];
-}
-
-document.getElementById(tab).style.display="block";
-document.getElementById(tab).innerText=content;
-
-}
+        setTimeout(()=>conf.remove(),2000);
+    }
+};
 
 </script>
 
