@@ -3,246 +3,317 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Meghal 😄</title>
+<title>For Meghal 🌼</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    background: linear-gradient(135deg, #ffeef3, #fef9ff);
-    text-align: center;
+body{
+margin:0;
+font-family:"Comic Sans MS",cursive;
+background:linear-gradient(135deg,#fff7cc,#fff2a8);
+text-align:center;
 }
 
-/* Corner note */
-.corner-note {
-    position: fixed;
-    top: 10px;
-    right: 15px;
-    font-size: 12px;
-    opacity: 0.6;
-    cursor: pointer;
+.nav button{
+margin:5px;
+padding:8px 12px;
+border:none;
+border-radius:12px;
+background:#ffe066;
+cursor:pointer;
 }
 
-/* Navigation */
-.nav {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding: 15px;
-    flex-wrap: wrap;
+.card{
+background:#fffdf0;
+padding:20px;
+border-radius:20px;
+max-width:420px;
+margin:20px auto;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
 }
 
-.nav button {
-    background: #ffd6e0;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 15px;
-    cursor: pointer;
+.hidden{display:none;}
+
+.character{
+width:100px;height:100px;
+background:#ffe066;
+border-radius:50%;
+margin:10px auto;
+position:relative;
+}
+.eye{
+width:10px;height:10px;background:black;border-radius:50%;
+position:absolute;top:35px;
+}
+.eye.left{left:30px;}
+.eye.right{right:30px;}
+.mouth{
+width:40px;height:20px;
+border-bottom:3px solid black;
+border-radius:0 0 50px 50px;
+position:absolute;bottom:25px;left:30px;
 }
 
-/* Card */
-.card {
-    background: white;
-    padding: 25px;
-    border-radius: 25px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
-    max-width: 420px;
-    margin: 20px auto;
+.option{
+display:block;
+margin:8px auto;
+padding:10px;
+border:none;
+border-radius:10px;
+background:#fff3b0;
+width:80%;
+cursor:pointer;
 }
 
-.hidden {
-    display: none;
-}
+#yesBtn{background:#ffb703;}
+#noBtn{background:#ffe066;position:relative;}
 
-img.profile {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-}
-
-/* Buttons */
-button.main {
-    padding: 12px 20px;
-    border-radius: 15px;
-    border: none;
-    cursor: pointer;
-    margin: 10px;
-}
-
-#yesBtn {
-    background: #ff6b81;
-    color: white;
-}
-
-#noBtn {
-    background: #dfe6e9;
-    position: relative;
-}
-
-/* Slider */
-input[type="range"] {
-    width: 80%;
-}
-
-/* Cartoon emoji style */
-.emoji {
-    font-size: 30px;
-}
+input[type="range"]{width:80%;}
 </style>
 </head>
 
 <body>
 
-<div class="corner-note" onclick="showPage('question')">
-    psst… Meghal 👀
-</div>
-
 <div class="nav">
-    <button onclick="showPage('jokes')">😂 Jokes</button>
-    <button onclick="showPage('calculator')">⚡ Excitement</button>
-    <button onclick="showPage('cafe')">☕ Cafe</button>
-    <button onclick="showPage('travel')">✈️ Travel</button>
+<button onclick="showPage('jokes')">😂 Jokes</button>
+<button onclick="showPage('quiz')">🧠 Quiz</button>
+<button onclick="showPage('rapid')">⚡ Rapid</button>
+<button onclick="showPage('calc')">💘 Meter</button>
+<button onclick="showPage('cafe')">☕</button>
+<button onclick="showPage('travel')">✈️</button>
 </div>
 
 <!-- JOKES -->
 <div id="jokes" class="card">
-    <img src="meghal.jpg" class="profile">
-    <h2>Meghal’s Personal Joke Zone 😌</h2>
-    <p style="font-size:13px;opacity:0.6;">
-        73% lame, 27% effort… all for you 😄
-    </p>
 
-    <p id="jokeText">Click below… regret guaranteed</p>
-    <button class="main" onclick="newJoke()">Give me a joke</button>
+<div class="character">
+<div class="eye left"></div>
+<div class="eye right"></div>
+<div class="mouth" id="mouth"></div>
 </div>
 
-<!-- CALCULATOR -->
-<div id="calculator" class="card hidden">
-    <h2>Excitement Meter 😏</h2>
-    <p>How excited are you to go out with me, Meghal?</p>
+<h2>👑 Lady Meghal’s Joke Court</h2>
 
-    <input type="range" min="0" max="100" value="50" id="slider" oninput="updateExcitement()">
-    <p id="exciteResult">50%… hmm suspicious 🤨</p>
+<p>Alright… I think you want to laugh 😌</p>
+
+<button class="option" onclick="startJokes('good')">😂 Good Joke</button>
+<button class="option" onclick="startJokes('lame')">😏 Lame Joke</button>
+<button class="option" onclick="startJokes('knock')">🚪 Knock Knock</button>
+
+<p id="jokeText"></p>
+
+<button id="nextJokeBtn" class="option hidden" onclick="nextJoke()">
+😂 Tap for another laugh
+</button>
+
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="card hidden">
+<h2>Quick Question 😏</h2>
+<p id="qText"></p>
+<div id="qOptions"></div>
+<p id="qFeedback"></p>
+</div>
+
+<!-- RAPID -->
+<div id="rapid" class="card hidden">
+<h2>Rapid Fire ⚡</h2>
+<p id="rapidText">Ready?</p>
+<button onclick="startRapid()">Start</button>
+</div>
+
+<!-- METER -->
+<div id="calc" class="card hidden">
+<h2>Excitement Meter 💘</h2>
+<input type="range" min="0" max="100" value="50" id="slider" oninput="updateMeter()">
+<p id="meterText">50%… hmm 🤨</p>
 </div>
 
 <!-- CAFE -->
 <div id="cafe" class="card hidden">
-    <h2>Cute Cafe Ideas ☕</h2>
-    <p id="cafeText">Click for something cute 😄</p>
-    <button class="main" onclick="newCafe()">Suggest cafe</button>
+<h2>Cafe Picker ☕</h2>
+<button onclick="randomCafe()">Pick</button>
+<p id="cafeText"></p>
 </div>
 
 <!-- TRAVEL -->
 <div id="travel" class="card hidden">
-    <h2>Travel Ideas ✈️</h2>
-    <p id="travelText">Let’s run away from reality 😌</p>
-    <button class="main" onclick="newTravel()">Suggest trip</button>
+<h2>Travel Picker ✈️</h2>
+<button onclick="randomTravel()">Pick</button>
+<p id="travelText"></p>
 </div>
 
-<!-- QUESTION -->
-<div id="question" class="card hidden">
-    <h2>Okay Meghal… serious moment 👀</h2>
-    <p>Will you go on a cute adventure/date with me? ✨</p>
+<!-- FINAL -->
+<div id="final" class="card hidden">
+<h2>One last thing 👀</h2>
+<p>Would you go on a date with me? ✨</p>
 
-    <button id="yesBtn" class="main">YES 😄</button>
-    <button id="noBtn" class="main">NO 🙃</button>
+<button id="yesBtn">YES 😄</button>
+<button id="noBtn">NO 🙃</button>
 
-    <p id="response" class="hidden"></p>
+<p id="finalText"></p>
 </div>
 
 <script>
 
-/* PAGE SWITCH */
-function showPage(page){
-    ["jokes","calculator","cafe","travel","question"].forEach(p=>{
-        document.getElementById(p).classList.add("hidden");
-    });
-    document.getElementById(page).classList.remove("hidden");
+/* PAGE */
+function showPage(p){
+["jokes","quiz","rapid","calc","cafe","travel","final"].forEach(id=>{
+document.getElementById(id).classList.add("hidden");
+});
+document.getElementById(p).classList.remove("hidden");
 }
 
-/* JOKES */
-const jokes = [
-    "Meghal, are you WiFi? Because I’m feeling a connection 📶",
-    "I made this instead of texting you… growth 📈",
-    "Meghal you must be tired… running in my mind AND this site 😭",
-    "You’re like my camera… I keep focusing on you 📸",
-    "Breaking: Meghal too cute for normal conversations 😌",
-    "This joke was better in my head… Meghal distracted me 😒"
+/* JOKE SYSTEM */
+let currentType="";
+
+const goodJokes=[
+"Are you made of copper and tellurium? Because you’re Cu-Te 😏",
+"I had a whole day planned… then I got distracted by a thought I didn’t mind 😄",
+"Some people make your day better just by existing… weird how that works",
+"I don’t usually get distracted easily… but clearly there are exceptions",
+"I think my brain just took a break and decided to smile for no reason"
 ];
 
-function newJoke(){
-    jokeText.innerText = jokes[Math.floor(Math.random()*jokes.length)];
+const lameJokes=[
+"I tried to come up with a better joke… this is what survived 😭",
+"This joke is so bad it deserves an apology 😌",
+"I had something funny… it left halfway 😒",
+"If bad jokes were an art form… this would still be questionable",
+"I promise I tried… just not very successfully 😏"
+];
+
+const knockJokes=[
+["Knock knock","Who’s there?","Lettuce","Lettuce who?","Lettuce go out sometime 😄"],
+["Knock knock","Who’s there?","Olive","Olive who?","Olive the idea of spending time together 😏"],
+["Knock knock","Who’s there?","Tank","Tank who?","You’re welcome 😌"],
+["Knock knock","Who’s there?","Boo","Boo who?","No need to cry… it’s just a joke 😄"]
+];
+
+function startJokes(type){
+currentType=type;
+showJoke();
+nextJokeBtn.classList.remove("hidden");
+}
+
+function nextJoke(){
+showJoke();
+}
+
+function showJoke(){
+
+if(currentType==="good"){
+jokeText.innerText=random(goodJokes);
+setFace("happy");
+}
+
+if(currentType==="lame"){
+jokeText.innerText=random(lameJokes);
+setFace("awkward");
+}
+
+if(currentType==="knock"){
+playKnock(random(knockJokes));
+setFace("happy");
+}
+}
+
+function playKnock(j){
+let i=0;
+let interval=setInterval(()=>{
+jokeText.innerText=j[i];
+i++;
+if(i>=j.length) clearInterval(interval);
+},900);
+}
+
+function random(arr){
+return arr[Math.floor(Math.random()*arr.length)];
+}
+
+/* FACE */
+function setFace(type){
+let m=document.getElementById("mouth");
+if(type==="happy"){
+m.style.borderBottom="3px solid black";
+m.style.borderTop="none";
+}
+if(type==="awkward"){
+m.style.borderBottom="none";
+m.style.borderTop="3px solid black";
+}
+}
+
+/* QUIZ */
+const quiz=[
+{q:"Why did this site exist?",o:["Timepass","Coding practice","There’s a reason 😏"],c:2},
+{q:"Best plan?",o:["Stay home","Scroll","Go out & vibe 😄"],c:2}
+];
+
+let qi=0;
+
+function loadQ(){
+let d=quiz[qi];
+qText.innerText=d.q;
+qOptions.innerHTML="";
+d.o.forEach((opt,i)=>{
+let b=document.createElement("button");
+b.className="option";
+b.innerText=opt;
+b.onclick=()=>{
+qFeedback.innerText=(i===d.c)?"Correct 😄":"Hmm try again 😌";
+setTimeout(()=>{
+qi++;
+if(qi<quiz.length){loadQ();qFeedback.innerText="";}
+else{showPage("final");}
+},1000);
+};
+qOptions.appendChild(b);
+});
+}
+loadQ();
+
+/* RAPID */
+function startRapid(){
+let c=0;
+let i=setInterval(()=>{
+startJokes("lame");
+c++;
+if(c>5) clearInterval(i);
+},700);
+}
+
+/* METER */
+function updateMeter(){
+let v=slider.value;
+if(v<30) meterText.innerText=v+"%… okay that hurts 😒";
+else if(v<70) meterText.innerText=v+"%… I’ll take it 😌";
+else meterText.innerText=v+"%… now we’re talking 😏";
 }
 
 /* CAFE */
-const cafes = [
-    "Sydney style brunch + juice + pancakes 🍓",
-    "Aesthetic cafe hopping with zero plans ☕",
-    "Dessert + coffee + judging people silently 😌",
-    "Cute corner cafe + long talks 🌸"
-];
-
-function newCafe(){
-    cafeText.innerText = cafes[Math.floor(Math.random()*cafes.length)];
+const cafes=["Juice + pancakes 🍓","Cute brunch spot ☕","Dessert + coffee 🍰"];
+function randomCafe(){
+cafeText.innerText=random(cafes);
 }
 
 /* TRAVEL */
-const travel = [
-    "Beach + sunset + juice stops 🌊",
-    "Get lost in a random city 🗺️",
-    "Mountains + chill + no phone 😌",
-    "Spontaneous road trip energy 🚗"
-];
-
-function newTravel(){
-    travelText.innerText = travel[Math.floor(Math.random()*travel.length)];
+const travel=["Beach 🌊","Mountains 🌄","City exploring 🗺️"];
+function randomTravel(){
+travelText.innerText=random(travel);
 }
 
-/* EXCITEMENT */
-function updateExcitement(){
-    let val = slider.value;
-    let text = "";
-
-    if(val < 30) text = val + "%… okay Meghal that’s rude 😒";
-    else if(val < 70) text = val + "%… I’ll take it 😌";
-    else if(val < 90) text = val + "%… now we’re talking 😏";
-    else text = val + "%… calm down Meghal 😭✨";
-
-    exciteResult.innerText = text;
+/* NO BUTTON */
+function move(){
+let x=Math.random()*200-100;
+let y=Math.random()*200-100;
+noBtn.style.transform=`translate(${x}px,${y}px)`;
 }
+noBtn.addEventListener("mouseover",move);
 
-/* NO BUTTON ESCAPE */
-function moveButton(){
-    const x = Math.random()*300 - 150;
-    const y = Math.random()*200 - 100;
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
-}
-
-noBtn.addEventListener("mouseover", moveButton);
-noBtn.addEventListener("touchstart", moveButton);
-
-/* YES CLICK */
-yesBtn.onclick = () => {
-    response.classList.remove("hidden");
-    response.innerHTML = "Okay Meghal this is officially cute 😭✨<br>Now I actually have to plan something good…";
-
-    // Confetti 🎉
-    for(let i=0;i<50;i++){
-        let conf = document.createElement("div");
-        conf.style.position = "fixed";
-        conf.style.width = "8px";
-        conf.style.height = "8px";
-        conf.style.background = "#ff6b81";
-        conf.style.top = Math.random()*100 + "%";
-        conf.style.left = Math.random()*100 + "%";
-        conf.style.opacity = 0.7;
-        conf.style.borderRadius = "50%";
-        document.body.appendChild(conf);
-
-        setTimeout(()=>conf.remove(),2000);
-    }
+/* YES */
+yesBtn.onclick=()=>{
+finalText.innerText="Alright… now I actually have to plan something good 😭✨";
 };
 
 </script>
